@@ -7,19 +7,15 @@ readonly BETS=1
 percentage()
 {
 	percent=$(($STAKE * 50 / 100 ))
-	min=$(($STAKE - $percent))
-	max=$(($STAKE + $percent))
 }
 
 gambler()
 {
-	local win=0
-	local lose=0
 	percentage
 	for (( i=1;i<=20;i++ ))
  	do
 		cash=$STAKE
-		while (( $cash > $min  && $cash < $max )) 
+		while (( $cash > $(($STAKE - $percent))  && $cash < $(($STAKE + $percent)) )) 
 		do
 			if [ $((RANDOM%2)) == 1 ]
 			then
@@ -43,24 +39,26 @@ add()
 gamblerLuck()
 {
 	add
-	local luckindex=1
-	local uluckindex=1
 	local luck=${gamblerDict[1]}
-	local uluck=${gamblerDict[1]}
+	local luckIndex=$i
 	for (( i=2;i<=20;i++ ))
 	do
 		if (( ${gamblerDict[$i]} > $luck ))
 		then		
 			luck=${gamblerDict[$i]}
-			luckindex=$i
-		elif (( ${gamblerDict[$i]} < $uluck ))
-		then 
-			uluck=${gamblerDict[$i]}
-			uluckindex=$i
+			luckIndex=$i
 		fi
 	done
-        echo "Luckiest Day: $luckindex"	
-	echo "Unluckiest Day: $uluckindex"
+	echo "Luckiest Day: $luckIndex"	 
+	for (( i=2;i<=20;i++ ))
+	do
+		if (( ${gamblerDict[$i]} < $luck ))
+		then		
+			luck=${gamblerDict[$i]}
+			luckIndex=$i
+		fi
+	done  	
+	echo "Unluckiest Day: $luckIndex"
 
 }
 gamblerChance()
