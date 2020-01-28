@@ -1,5 +1,6 @@
 #!/bin/bash
 
+declare -A gamblerDict
 readonly STAKE=100
 readonly BETS=1
 
@@ -23,20 +24,14 @@ gambler()
 			if [ $((RANDOM%2)) == 1 ]
 			then
 				cash=$(( $cash + $BETS))
-				echo "$cash"
 			else
 				cash=$(( $cash - $BETS ))
-				echo "$cash"
 			fi
 		done
-		if (( $cash > 100 ))
-		then
- 			win=$(( $win + 50))
-		else
-			lose=$(( $lose + 50))
-		fi
+		gamblerDict[$i]=$(($cash-$STAKE))
 	done
-	echo -e "Total winning cash: $win \nTotal losing cash: $lose"
+	echo "Days: ${!dict[@]}"
+	echo "Amount: ${dict[@]}"
 		
 }
 echo "Welcome  to Gambler problem"
