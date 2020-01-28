@@ -30,8 +30,8 @@ gambler()
 		done
 		gamblerDict[$i]=$(($cash-$STAKE))
 	done
-	echo "Days: ${!dict[@]}"
-	echo "Amount: ${dict[@]}"
+	echo "Days: ${!gamblerDict[@]}"
+	echo "Amount: ${gamblerDict[@]}"
 		
 }
 echo "Welcome  to Gambler problem"
