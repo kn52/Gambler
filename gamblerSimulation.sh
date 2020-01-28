@@ -13,8 +13,8 @@ percentage()
 
 gambler()
 {
-	win=0
-	lose=0
+	local win=0
+	local lose=0
 	percentage
 	for (( i=1;i<=20;i++ ))
  	do
@@ -30,9 +30,39 @@ gambler()
 		done
 		gamblerDict[$i]=$(($cash-$STAKE))
 	done
-	echo "Days: ${!gamblerDict[@]}"
-	echo "Amount: ${gamblerDict[@]}"
-		
 }
+add()
+{
+	for (( i=2;i<=20;i++ ))
+	do
+		gamblerDict[$i]=$(( ${gamblerDict[$i]} + ${gamblerDict[$((i-1))]} ))
+	done
+        echo "Days: ${!gamblerDict[@]}"	
+	echo "Amount: ${gamblerDict[@]}"
+}
+gamblerLuck()
+{
+	add
+	local luckindex=1
+	local uluckindex=1
+	local luck=${gamblerDict[1]}
+	local uluck=${gamblerDict[1]}
+	for (( i=2;i<=20;i++ ))
+	do
+		if (( ${gamblerDict[$i]} > $luck ))
+		then		
+			luck=${gamblerDict[$i]}
+			luckindex=$i
+		elif (( ${gamblerDict[$i]} < $uluck ))
+		then
+			uluck=${gamblerDict[$i]}
+			uluckindex=$i
+		fi
+	done
+        echo "Luckiest Day: $luckindex"	
+	echo "Unluckiest Day: $uluckindex"
+}
+
 echo "Welcome  to Gambler problem"
 gambler
+gamblerLuck
