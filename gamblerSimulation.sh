@@ -54,15 +54,29 @@ gamblerLuck()
 			luck=${gamblerDict[$i]}
 			luckindex=$i
 		elif (( ${gamblerDict[$i]} < $uluck ))
-		then
+		then 
 			uluck=${gamblerDict[$i]}
 			uluckindex=$i
 		fi
 	done
         echo "Luckiest Day: $luckindex"	
 	echo "Unluckiest Day: $uluckindex"
+
+}
+gamblerChance()
+{
+	months=1
+	while (( ${gamblerDict[20]} > 0))
+	do	
+		((months++))
+		gambler
+		gamblerLuck
+	done
+	echo "Gambler  Play for $((months+1)) months"
 }
 
 echo "Welcome  to Gambler problem"
 gambler
 gamblerLuck
+gamblerChance
+
